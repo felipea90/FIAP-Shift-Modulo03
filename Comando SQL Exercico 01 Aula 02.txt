@@ -1,16 +1,17 @@
 CREATE TABLE Categoria (
     Cod_Categoria NUMBER CONSTRAINT PK_Categoria_Cod_Categoria PRIMARY KEY,
-    Categoria VARCHAR2(255)
+    Categoria VARCHAR2(255) UNIQUE,
+	CONSTRAINT CK_Categoria_Categoria CHECK (Categoria in ('DOCE', 'BEBIDA', 'CONGELADO'))
 );
 
 CREATE TABLE Materia_Prima (
     Cod_Materia_Prima NUMBER CONSTRAINT PK_Materia_Prima_Cod_Materia_Prima PRIMARY KEY,
-    Materia_Prima VARCHAR2(255)
+    Materia_Prima VARCHAR2(255) UNIQUE
 );
 
 CREATE TABLE Produto (
     Cod_Produto NUMBER CONSTRAINT PK_Produto_Cod_Produto PRIMARY KEY,
-    Produto VARCHAR2(255),
+    Produto VARCHAR2(255) UNIQUE,
     Cod_Categoria NUMBER CONSTRAINT FK_Produto_Cod_Produto_Categoria_Cod_Categoria 
     REFERENCES Categoria (Cod_Categoria)
 );
@@ -18,7 +19,7 @@ CREATE TABLE Produto (
 CREATE TABLE Item_Produto (
     Cod_Produto NUMBER,
     Cod_Materia_Prima NUMBER,
-    Quantidade NUMBER,
+    Quantidade NUMBER NOT NULL,
     
     CONSTRAINT PK_Item_Produto_Cod_Produto_Cod_Materia_Prima 
 	PRIMARY KEY (Cod_Produto, Cod_Materia_Prima),
